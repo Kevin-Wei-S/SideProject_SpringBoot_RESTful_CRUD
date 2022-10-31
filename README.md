@@ -10,7 +10,8 @@ SpringBoot-Simple-RESTful-CRUD
 一門技術學不深又換技術，就我目前而言不是件好事，於是深思後，協議離職。
 
 在這半年補了Spring、SpringMVC、MyBatis、SpringBoot，
-
+<https://github.com/Kevin-Wei-S/SSM>
+<https://github.com/Kevin-Wei-S/SpringBoot>
 接下來開始新的里程!
 
 ![image](https://github.com/Kevin-Wei-S/SideProject_SpringBoot_RESTful_CRUD/raw/master/SSM.png)
