@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)http://getbootstrap.com/docs/4.0/examples/dashboard/ -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org ">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+		<title>Dashboard Template for Bootstrap</title>
+		<!-- favicon -->
+		<link rel="shortcut icon" th:href="@{/favicon.ico}" >
+		<link rel="bookmark" th:href="@{/favicon.ico}" >
+		<!-- Bootstrap core CSS -->
+		<link th:href="@{/asserts/css/bootstrap.min.css}" rel="stylesheet">
+
+		<!-- Custom styles for this template -->
+		<link th:href="@{/asserts/css/dashboard.css}" rel="stylesheet">
+		<style type="text/css">
+			/* Chart.js */
+			
+			@-webkit-keyframes chartjs-render-animation {
+				from {
+					opacity: 0.99
+				}
+				to {
+					opacity: 1
+				}
+			}
+			
+			@keyframes chartjs-render-animation {
+				from {
+					opacity: 0.99
+				}
+				to {
+					opacity: 1
+				}
+			}
+			
+			.chartjs-render-monitor {
+				-webkit-animation: chartjs-render-animation 0.001s;
+				animation: chartjs-render-animation 0.001s;
+			}
+			
+			td{
+				text-align: center;
+				font-weight: bolder;
+			}
+			
+		</style>
+	</head>
+
+	<body>
+		<!-- 導入抽取的topbar -->
+		<!-- TemplateName會使用Thymeleaf的前後綴配置規則來解析 -->
+		<div th:replace="commons/bar::topbar"></div>
+
+		<div class="container-fluid" id="app">
+			<div class="row">
+				<!-- 導入抽取的sidebar -->
+				<div th:replace="commons/bar::#sidebar(activeUri='emps')"></div>
+				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+					<div align="center">
+						<h2 th:text="${emp!=null}?Employee_Update:Employee_Add"></h2>
+						<!-- 必須判斷是添加或修改 -->
+						<form th:action="@{/emp}" method="post">
+							<input th:if="${emp!=null}" type="hidden" name="_method" value="put">
+							<input th:if="${emp!=null}" type="hidden" name="id" th:value="${emp.id}">
+							<table border="1">
+								<tr>
+									<td>LastName:</td>
+									<td>
+										<input type="text" name="lastName" th:value="${emp!=null}?${emp.lastName}">
+									</td>
+								</tr>
+								<tr>
+									<td>Email:</td>
+									<td>
+										<input type="text" name="email" th:value="${emp!=null}?${emp.email}">
+									</td>
+								</tr>
+								<tr>
+									<td>Gender:</td>
+									<td>
+										<label for="M">Male</label>
+										<input id="M" type="radio" name="gender" checked value="1" th:checked="${emp!=null}?${emp.gender==1}:checked">
+										<label for="F">Female</label>
+										<input id="F" type="radio" name="gender" value="0" th:checked="${emp!=null}?${emp.gender==0}">
+										<label for="E">Else</label>
+										<input id="E" type="radio" name="gender" value="2" th:checked="${emp!=null}?${emp.gender==2}">
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<!-- name: 參數支援級聯 -->
+										<select name="department.id" class="form-select font-weight-bold" required>
+											<option class="font-weight-bold" disabled selected>Select Your Department</option>
+											<option class="font-weight-bold" th:each="department:${departments}" th:value="${department.id}" th:selected="${emp!=null}?${emp.department.id==department.id}">[[${department.departmentName}]]</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Birth:</td>
+									<td>
+										<!-- <input type="date" name="birth" required th:value="${emp!=null}?${#dates.format(emp.birth,'yyyy-MM-dd')}"> -->
+										<input type="text" name="birth" th:value="${emp!=null}?${#dates.format(emp.birth,'yyyy-MM-dd')}">
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<input class="btn btn-sm btn-warning font-weight-bold" type="submit" th:value="${emp!=null}?Update:Add">
+									</td>
+								</tr>
+							</table>
+						</form>
+					</div>
+				</main>
+			</div>
+		</div>
+
+		<!-- Bootstrap core JavaScript
+    ================================================== -->
+		<!-- 導入Vue -->
+		<script type="text/javascript" th:src="@{asserts/js/vue.js}"></script>
+		<script type="text/javascript">
+			var vue = new Vue({
+				el:"#app",
+				methods:{
+					
+				}
+			})
+		</script>
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script type="text/javascript" th:src="@{asserts/js/jquery-3.2.1.slim.min.js}"></script>
+		<script type="text/javascript" th:src="@{asserts/js/popper.min.js}"></script>
+		<script type="text/javascript" th:src="@{asserts/js/bootstrap.min.js}"></script>
+
+		<!-- Icons -->
+		<script type="text/javascript" th:src="@{asserts/js/feather.min.js}"></script>
+		<script>
+			feather.replace()
+		</script>
+
+		<!-- Graphs -->
+		<script type="text/javascript" th:src="@{asserts/js/Chart.min.js}"></script>
+		<script>
+			var ctx = document.getElementById("myChart");
+			var myChart = new Chart(ctx, {
+				type: 'line',
+				data: {
+					labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+					datasets: [{
+						data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
+						lineTension: 0,
+						backgroundColor: 'transparent',
+						borderColor: '#007bff',
+						borderWidth: 4,
+						pointBackgroundColor: '#007bff'
+					}]
+				},
+				options: {
+					scales: {
+						yAxes: [{
+							ticks: {
+								beginAtZero: false
+							}
+						}]
+					},
+					legend: {
+						display: false,
+					}
+				}
+			});
+		</script>
+	</body>
+</html>

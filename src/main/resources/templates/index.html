@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<title>Index</title>
+		<!-- favicon -->
+		<link rel="shortcut icon" th:href="@{/favicon.ico}" >
+		<link rel="bookmark" th:href="@{/favicon.ico}" >
+		<!-- Bootstrap core CSS -->
+		<link th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.css}" rel="stylesheet">
+		<!-- Custom styles for this template -->
+		<link th:href="@{/asserts/css/signin.css}" rel="stylesheet">
+	</head>
+
+	<body class="text-center">
+		<form class="form-signin" th:action="@{/user/login}" method="post">
+			<img class="mb-4" th:src="@{/asserts/img/bootstrap-solid.svg}" alt="" width="160" height="120">
+			<h1 class="h3 mb-3 font-weight-normal" th:text="#{index.tip}">Please sign in</h1>
+			<p th:text="${msg}" style="color:red;" th:if="${not #strings.isEmpty(msg)}"></p>
+			<label class="sr-only" th:text="#{index.username}">Username</label>
+			<input type="text" class="form-control" name="username" th:placeholder="#{index.username}" placeholder="Username" required="" autofocus="">
+			<label class="sr-only" th:text="#{index.password}">Password</label>
+			<input type="password" class="form-control" name="password" th:placeholder="#{index.password}" placeholder="Password" required="">
+			<div class="checkbox mb-3">
+				<label>
+          <input type="checkbox" value="remember-me"/> [[#{index.remember}]]
+        </label>
+			</div>
+			<button class="btn btn-lg btn-primary btn-block" type="submit" th:text="#{index.login}">Sign in</button>
+			<p class="mt-5 mb-3 text-muted">© 2022-2023</p>
+			<a class="btn btn-sm" th:href="@{/index.html(l='zh_TW')}">中文</a>
+			<a class="btn btn-sm" th:href="@{/index.html(l='en_US')}">English</a>
+		</form>
+
+	</body>
+
+</html>
