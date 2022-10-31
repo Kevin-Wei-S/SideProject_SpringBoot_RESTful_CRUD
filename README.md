@@ -1,4 +1,4 @@
-# sideproject_springboot_restful_crud
+# SideProject_SpringBoot_RESTful_CRUD
 SpringBoot-Simple-RESTful-CRUD
 
 2022年5月底，離開前公司。
